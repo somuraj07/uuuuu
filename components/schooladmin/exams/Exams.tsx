@@ -109,7 +109,6 @@ export default function ExamsPage() {
             onChange={(e) => setName(e.target.value)}
             placeholder="Exam name (e.g., Unit 1, Mid Term, Final)"
             className="flex-1 px-4 py-3 rounded-lg border glass focus:outline-none focus:ring-2"
-            style={{ focusRingColor: MAIN_COLOR }}
             required
           />
           <button

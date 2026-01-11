@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { MAIN_COLOR } from "@/constants/colors"
 
 type Leave = {
   id: string

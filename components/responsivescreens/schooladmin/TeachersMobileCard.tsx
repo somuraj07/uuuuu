@@ -1,5 +1,6 @@
 import { FiTrash, FiUser } from "react-icons/fi";
 import { Teacher } from "@/interfaces/dashboard";
+import { MAIN_COLOR } from "@/constants/colors";
 
 export default function TeacherMobileCard({
   teacher,
@@ -9,7 +10,7 @@ export default function TeacherMobileCard({
   return (
     <div className="bg-white border rounded-xl p-4 space-y-3 shadow-sm">
       <div className="flex items-center gap-3">
-        <div className="w-9 h-9 rounded-full bg-green-100 text-green-600 flex items-center justify-center">
+        <div className="w-9 h-9 rounded-full text-white flex items-center justify-center" style={{ backgroundColor: MAIN_COLOR }}>
           <FiUser />
         </div>
 

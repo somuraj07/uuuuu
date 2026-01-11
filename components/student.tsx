@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import PayButton from "./PayButton";
-import { StudentFeeApiResponse } from "@/interfaces/student";
+import { StudentFeeApiResponse, StudentFee } from "@/interfaces/student";
 import { MAIN_COLOR, ACCENT_COLOR } from "@/constants/colors";
 
 interface Mark {
@@ -82,24 +82,6 @@ interface TransferCertificate {
   issuedDate: string | null;
   tcDocumentUrl: string | null;
   createdAt: string;
-}
-
-interface StudentFee {
-  id: string;
-  totalFee: number;
-  discountPercent: number;
-  finalFee: number;
-  amountPaid: number;
-  remainingFee: number;
-  installments: number;
-}
-
-interface StudentFeeApiResponse {
-  fee: StudentFee;
-  student: { name: string | null; email: string | null };
-  class: { name: string; section: string | null } | null;
-  school: { name: string; address: string; city: string | null; state: string | null; pincode: string | null };
-  payments: any[];
 }
 
 interface Appointment {
