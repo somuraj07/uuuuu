@@ -10,6 +10,7 @@ import TeacherMobileCard from "@/components/responsivescreens/schooladmin/Teache
 
 import DynamicForm from "@/components/ui/models/DynamicForm";
 import { addTeacherFields } from "@/constants/schooladmin/addTeacherForm";
+import { MAIN_COLOR, ACCENT_COLOR } from "@/constants/colors";
 
 
 export default function TeachersPage({teachers,reload,loading}:{
@@ -45,7 +46,7 @@ export default function TeachersPage({teachers,reload,loading}:{
       header: "Name",
       render: (row) => (
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 sm:w-7 sm:h-7 rounded-full bg-green-100 text-green-600 flex items-center justify-center">
+          <div className="w-8 h-8 sm:w-7 sm:h-7 rounded-full text-white flex items-center justify-center" style={{ backgroundColor: MAIN_COLOR }}>
             <FiUser className="text-sm" />
           </div>
           <span className="text-sm font-medium whitespace-nowrap">
@@ -73,7 +74,7 @@ export default function TeachersPage({teachers,reload,loading}:{
     {
       header: "Subject",
       render: (row) => (
-        <span className="px-2 py-1 text-xs rounded-full bg-green-100 text-green-700 whitespace-nowrap">
+        <span className="px-2 py-1 text-xs rounded-full bg-purple-100 text-purple-700 whitespace-nowrap">
           {row.subjectsTaught}
         </span>
       ),

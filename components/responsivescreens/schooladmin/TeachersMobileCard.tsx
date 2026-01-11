@@ -29,8 +29,8 @@ export default function TeacherMobileCard({
         </p>
         <p>
           <span className="font-medium">Subject:</span>{" "}
-          <span className="px-2 py-0.5 rounded-full bg-green-100 text-green-700">
-            {teacher.subject}
+          <span className="px-2 py-0.5 rounded-full bg-purple-100 text-purple-700">
+            {teacher.subjectsTaught}
           </span>
         </p>
       </div>
