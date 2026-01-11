@@ -1,0 +1,140 @@
+"use client";
+
+import { useState } from "react";
+import { signIn, getSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
+import { MAIN_COLOR, ACCENT_COLOR, GRADIENT_PRIMARY, GRADIENT_LAVENDER, MAIN_COLOR_DARK } from "@/constants/colors";
+
+export default function LoginPage() {
+  const router = useRouter();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
+
+    const result = await signIn("credentials", {
+      redirect: false,
+      email,
+      password,
+    });
+
+    if (result?.error) {
+      setError("Invalid email or password");
+      setLoading(false);
+      return;
+    }
+
+    const session = await getSession();
+    if (!session?.user) return;
+
+    const roleRoutes: Record<string, string> = {
+      SUPERADMIN: "/frontend/superadmin/dashboard",
+      SCHOOLADMIN: "/frontend/schooladmin/dashboard",
+      TEACHER: "/teachersPortal",
+      STUDENT: "/frontend/parent/dashboard",
+    };
+
+    router.push(roleRoutes[session.user.role] || "/unauthorized");
+    setLoading(false);
+  };
+
+  return (
+    <div 
+      className="min-h-screen flex items-center justify-center px-4 py-8"
+      style={{ background: GRADIENT_PRIMARY }}
+    >
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.3 }}
+        className="w-full max-w-md"
+      >
+        <div className="glass-card rounded-3xl p-8 shadow-2xl">
+          {/* Header */}
+          <div className="text-center mb-8">
+            <h1 className="text-4xl font-bold mb-2" style={{ color: MAIN_COLOR }}>
+              Welcome Back
+            </h1>
+            <p className="text-gray-600">
+              Sign in to your account
+            </p>
+          </div>
+
+          {error && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mb-4 p-3 rounded-lg bg-red-50 border border-red-200 text-red-700 text-sm text-center"
+            >
+              {error}
+            </motion.div>
+          )}
+
+          <form onSubmit={handleLogin} className="space-y-6">
+            {/* Email Input */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Email
+              </label>
+              <input
+                type="email"
+                placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                className="w-full px-4 py-3 rounded-xl border glass focus:outline-none focus:ring-2 transition"
+                style={{ borderColor: ACCENT_COLOR }}
+              />
+            </div>
+
+            {/* Password Input */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Password
+              </label>
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Enter password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  className="w-full px-4 py-3 pr-12 rounded-xl border glass focus:outline-none focus:ring-2 transition"
+                  style={{ borderColor: ACCENT_COLOR }}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-sm font-medium"
+                  style={{ color: MAIN_COLOR }}
+                >
+                  {showPassword ? "Hide" : "Show"}
+                </button>
+              </div>
+            </div>
+
+            {/* Submit Button */}
+            <motion.button
+              type="submit"
+              disabled={loading}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              className="w-full py-3 rounded-xl text-white font-semibold shadow-lg transition disabled:opacity-60 disabled:cursor-not-allowed"
+              style={{ backgroundColor: MAIN_COLOR_DARK }}
+            >
+              {loading ? "Logging in..." : "Log In"}
+            </motion.button>
+          </form>
+        </div>
+      </motion.div>
+    </div>
+  );
+}

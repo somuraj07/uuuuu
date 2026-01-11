@@ -1,0 +1,140 @@
+@import "tailwindcss";
+
+:root {
+  --background: #FFFFFF;
+  --foreground: #1F2937;
+  --lavender-primary: #8B5CF6;
+  --lavender-light: #A78BFA;
+  --lavender-dark: #7C3AED;
+  --lavender-accent: #E9D5FF;
+  --bg-light: #F5F3FF;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: linear-gradient(135deg, #FFFFFF 0%, #F5F3FF 50%, #E9D5FF 100%);
+  background-attachment: fixed;
+  color: var(--foreground);
+  font-family: var(--font-poppins), sans-serif;
+  min-height: 100vh;
+}
+
+/* Glassmorphism utility classes */
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(139, 92, 246, 0.1);
+}
+
+.glass-strong {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  box-shadow: 0 12px 48px 0 rgba(139, 92, 246, 0.15);
+}
+
+.glass-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(245, 243, 255, 0.8) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(139, 92, 246, 0.25);
+  box-shadow: 0 8px 32px 0 rgba(139, 92, 246, 0.12);
+}
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeInLeft 0.45s ease forwards;
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-slide-in-left {
+  animation: slideInLeft 0.35s ease-out both;
+}
+
+/* ===============================
+   GLOBAL DASHBOARD ANIMATIONS
+================================ */
+
+/* Base entrance from left */
+@keyframes dashboardEnter {
+  0% {
+    opacity: 0;
+    transform: translateX(-32px) scale(0.96);
+  }
+  60% {
+    opacity: 1;
+    transform: translateX(0) scale(1.01);
+  }
+  100% {
+    transform: translateX(0) scale(1);
+  }
+}
+
+/* Container fade (page level) */
+@keyframes dashboardContainer {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ---------- Utilities ---------- */
+
+.animate-dashboard {
+  animation: dashboardEnter 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-dashboard-container {
+  animation: dashboardContainer 0.3s ease-out both;
+}
+
+/* ---------- Stagger Support ---------- */
+[data-animate-item] {
+  animation: dashboardEnter 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Delay based on index */
+[data-animate-item="1"] { animation-delay: 0.05s; }
+[data-animate-item="2"] { animation-delay: 0.1s; }
+[data-animate-item="3"] { animation-delay: 0.15s; }
+[data-animate-item="4"] { animation-delay: 0.2s; }
+[data-animate-item="5"] { animation-delay: 0.25s; }
+
+/* Responsive utilities */
+@media (max-width: 640px) {
+  .glass {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+}
